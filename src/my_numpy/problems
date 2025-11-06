@@ -1,0 +1,59 @@
+1. Finance (Stock Volatility)
+
+You track the closing prices of a tech stock for 20 days.
+Generate an array of simulated daily prices starting from £120 and fluctuating ±2% each day.
+Compute the 5-day rolling average prices.
+
+2. Agriculture (Crop Growth Monitoring)
+
+You monitor plant height (in cm) of 6 different crops across 4 weeks.
+Simulate the dataset as a 6×4 array with weekly height increments between 1.5 cm and 5 cm.
+Find which crop had the largest total height increase over 4 weeks.
+
+3. Energy (Solar Farm Output)
+
+A solar farm records hourly energy output (kWh) for 7 days.
+Create a 7×24 array of simulated data where daytime hours (6–18) produce between 100–500 kWh and other hours produce 0–50 kWh.
+Find the day with the highest total production.
+
+4. Healthcare (Patient Vitals)
+
+You measure 8 patients’ heart rates every 2 hours over a 24-hour period.
+Build a 8×12 array with integer values between 60 and 100.
+Compute the mean heart rate for each patient and identify who had the highest average.
+
+5. Transportation (EV Charging Network)
+
+You manage 10 electric vehicle chargers and record their usage (kWh delivered) for 5 days.
+Construct a 10×5 array of random integers between 20 and 120.
+Find the total energy dispensed per day and per station.
+
+6. Retail (Sales Data)
+
+A store sells 4 products across 6 regions.
+Generate a 4×6 array of daily unit sales (between 10 and 200).
+Compute the top-selling product and the highest-performing region.
+
+7. Sports Analytics (Player Performance)
+
+Each of 5 basketball players has their points scored across 10 games.
+Create a 5×10 array of integers between 5 and 40.
+Determine the average points per player and identify any game where a player scored above 35.
+
+8. Aerospace (Fuel Consumption)
+
+You log hourly fuel consumption (kg) for a 4-engine aircraft over a 10-hour flight.
+Simulate a 4×10 array of values between 400 and 900.
+Find the engine with the most consistent (least variable) consumption.
+
+9. Logistics (Warehouse Inventory)
+
+Track stock levels of 6 items over 8 days.
+Start each item at 100 units and subtract random daily shipments between 5 and 15 units.
+Compute when each item first dropped below 50 units.
+
+10. Weather Science (Temperature Grid)
+
+A climate scientist collects temperature data over a 5×5 region for 7 days.
+Simulate a 7×5×5 array of daily readings between 10 °C and 35 °C.
+Find the warmest cell’s average temperature over the week.
