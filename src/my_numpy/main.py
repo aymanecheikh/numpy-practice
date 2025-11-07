@@ -53,25 +53,29 @@ class Agriculture:
     Find which crop had the largest total height increase over 4 weeks.
     '''
     @property
-    def weekly_height_increments(self):
-        weekly_height_increments = uniform(
-            low=1.5,
-            high=5,
-            size=(6,4)
+    def weekly_plant_height_increments(self):
+        return uniform(1.5, 5, (6, 4))
+    
+    @property
+    def weekly_plant_height_progression(self):
+        return np.cumsum(self.weekly_plant_height_increments, axis=1)
+    
+    @property
+    def total_height_increases(self):
+        return (
+            self.weekly_plant_height_progression[:,-1]
+            - self.weekly_plant_height_progression[:,0]
         )
-        plant_height_growth = np.apply_along_axis(
-            func1d=np.cumsum,
-            axis=1,
-            arr=weekly_height_increments
-        )
-        total_height_increases = (
-            plant_height_growth[:,-1] - plant_height_growth[:,0]
-        )
-        return f'Crop ID with largest total height increase: {
-            np.where(
-                max(total_height_increases) == total_height_increases
-            )[0][0]
-            }'
+    
+    @property
+    def plant_with_largest_total_height_increase(self):
+        total_height_increases = self.total_height_increases
+        return np.where(
+            (
+                np.max(total_height_increases)
+                == total_height_increases
+            )
+        )[0][0]
     
     '''
     Each week, a crop grows by a factor between 1.01 to 1.10 depending on
@@ -99,33 +103,14 @@ class Energy:
     
     Find the day with the highest total production.
     '''
-    def generate_energy_output(self, low: int, high: int, size: int):
-        return uniform(
-            low=low,
-            high=high,
-            size=size
-        )
     
     @property
     def highest_total_energy_production(self):
-        day = uniform(
-            low=100,
-            high=500,
-            size=(7, 12)
-        )
-        night = np.random.uniform(
-            low=0,
-            high=50,
-            size=(7, 12)
-        )
-        total_daily_output = np.apply_along_axis(
-            func1d=np.sum,
-            axis=1,
-            arr=day+night
-        )
-        return f'Day ID with largest total energy output: {
-            np.where(max(total_daily_output) == total_daily_output)[0][0]
-            }'
+        day = uniform(100,500,(7, 12))
+        night = uniform(0,50,(7, 12))
+        total_daily_output = np.sum(np.sum([day, night], axis=0), axis=0)
+        return np.where(total_daily_output.max()==total_daily_output)[0][0]
+
     
     '''
     A solar panel loses 0.2 to 0.4% efficiency per month due to weathering.
@@ -166,27 +151,13 @@ class Healthcare:
     highest average.
     '''
     @property
-    def mean_heart_rate_per_patient(self):
-        heart_rates = np.array(
-            uniform(
-                low=60,
-                high=100,
-                size=(8, 12)
-            ),
-            dtype='int8'
-        )
-        return np.apply_along_axis(
-            func1d=np.mean,
-            axis=1,
-            arr=heart_rates
-        )
-    
-    @property
     def highest_average_heart_rate(self):
-        average_heart_rates = self.mean_heart_rate_per_patient
-        return f'Patient ID with highest average heart rate: {
-            np.where(average_heart_rates.max() == average_heart_rates)[0][0]
-        }'
+        heart_rates = uniform(60,100,(8, 12))
+        average_heart_rate_per_patient = np.mean(heart_rates, axis=0)
+        return np.where(
+            average_heart_rate_per_patient.max()
+            ==average_heart_rate_per_patient
+        )[0][0]
     
     '''
     A patient’s viral load doubles daily for the first 10 days, but random
@@ -214,27 +185,22 @@ class Transport:
     '''
     @property
     def ev_charger_usage_data(self):
-        return uniform(
-            low=20,
-            high=120,
-            size=(10, 5)
+        return np.array(
+            uniform(
+                low=20,
+                high=120,
+                size=(10, 5)
+            ),
+            dtype='int'
         )
     
     @property
     def total_energy_dispersed_by_day(self):
-        return float(np.apply_along_axis(
-            func1d=np.sum,
-            axis=0,
-            arr=self.ev_charger_usage_data
-        ).sum())
+        return np.sum(self.ev_charger_usage_data, axis=1).sum()
     
     @property
     def total_energy_dispersed_by_station(self):
-        return float(np.apply_along_axis(
-            func1d=np.sum,
-            axis=1,
-            arr=self.ev_charger_usage_data
-        ).sum())
+        return np.sum(self.ev_charger_usage_data, axis=0).sum()
     
     '''
     Each station adds a random multiplier between 1.00 and 1.05 to the current
@@ -282,36 +248,23 @@ class Retail:
                 high=200,
                 size=(4, 6)
             ),
-            dtype='int16'
+            dtype='int'
         )
     
     @property
     def top_selling_product(self):
-        total_unit_sales_by_product = np.apply_along_axis(
-            func1d=np.sum,
-            axis=1,
-            arr=self.daily_unit_sales
-        )
-        return f'Product ID Sold the Most: {
-            np.where(
-                total_unit_sales_by_product.max()
-                == total_unit_sales_by_product
-            )[0][0]
-        }'
+        total_sales_by_product =  np.sum(self.daily_unit_sales, axis=1)
+        return np.where(
+            total_sales_by_product.max()==total_sales_by_product
+        )[0][0]
     
     @property
     def highest_performing_region(self):
-        total_unit_sales_by_region = np.apply_along_axis(
-            func1d=np.sum,
-            axis=0,
-            arr=self.daily_unit_sales
-        )
-        return f'Product ID Sold the Most: {
-            np.where(
-                total_unit_sales_by_region.max()
-                == total_unit_sales_by_region
-            )[0][0]
-        }'
+        total_sales_by_region =  np.sum(self.daily_unit_sales, axis=0)
+        print(total_sales_by_region)
+        return np.where(
+            total_sales_by_region.max()==total_sales_by_region
+        )[0][0]
     
     '''
     A store retains 95 to 99% of its customers each month.
