@@ -316,6 +316,21 @@ class Sports:
         return f'Game ID(s) where a player scored above 35: {
             np.where(data > 35)[1]
         }'
+    
+    '''
+    An athlete’s performance metric is multiplied each game by a random
+    consistency factor between 0.95 and 1.05.
+    
+    Simulate 30 games and use np.cumprod() to visualize how small performance
+    fluctuations accumulate over a season.
+    '''
+    @property
+    def athlete_performance_metric(self):
+        return uniform(low=0.95, high=1.05, size=30)
+    
+    @property
+    def performance_flucutation_accumulation(self):
+        return np.cumprod(self.athlete_performance_metric)
 
 
 class Aerospace:
@@ -436,7 +451,16 @@ class ClimateScience:
     '''
     @property
     def temperature_deviation(self):
-        return uniform(low=0.1, high=0.3, size=24)
+        positive_deviations = uniform(low=0.1, high=0.3, size=24)
+        return np.apply_along_axis(
+            func1d=lambda x: x * np.random.choice([1, -1]),
+            axis=0,
+            arr=positive_deviations
+        )
+    
+    @property
+    def compounding_anomaly_effects(self):
+        return 1 + np.cumprod(1 + self.temperature_deviation)
 
 
 class Pharmaceuticals:
