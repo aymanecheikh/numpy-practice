@@ -1,0 +1,39 @@
+Aerospace (Fuel Efficiency Simulation)
+A spacecraft’s fuel efficiency decreases by 0.3% with each kilometer ascended due to gravity and drag.
+Generate a 10-element array representing efficiency multipliers and compute the cumulative product to estimate efficiency after each kilometer.
+
+Pharmaceuticals (Drug Absorption)
+Simulate hourly absorption rates (as percentages) for a new oral drug over 12 hours.
+Use np.cumprod() to estimate total absorption progression over time.
+
+Retail (Customer Retention)
+A store retains 95–99% of its customers each month.
+Generate 24 months of random retention rates and use cumulative product to estimate the fraction of original customers remaining each month.
+
+Energy (Solar Panel Degradation)
+A solar panel loses 0.2–0.4% efficiency per month due to weathering.
+Simulate 5 years of performance loss and use np.cumprod() to estimate total efficiency after each month.
+
+Agriculture (Crop Growth Factor)
+Each week, a crop grows by a factor between 1.01–1.10 depending on weather.
+Use np.cumprod() to simulate plant height progression over 16 weeks starting from 10 cm.
+
+Manufacturing (Assembly Line Yield)
+Each production stage has a yield rate between 93–99%.
+Generate 15 stages and use np.cumprod() to estimate total yield across the full process.
+
+Transportation (Train Delay Accumulation)
+Each station adds a random multiplier between 1.00 and 1.05 to the current delay time due to compounding congestion.
+Use np.cumprod() to simulate total delay accumulation over 20 stations starting from a 2-minute base delay.
+
+Healthcare (Viral Load Growth)
+A patient’s viral load doubles daily for the first 10 days, but random medication effectiveness reduces the growth factor to between 1.5–2.0.
+Simulate the viral load trajectory using np.cumprod().
+
+Climate Science (Temperature Anomaly)
+A model predicts that each month’s temperature deviation is 0.1–0.3× the previous month’s anomaly due to climate inertia.
+Use np.cumprod() to simulate 24 months of compounding anomaly effects starting from a baseline deviation of +1 °C.
+
+Sports Analytics (Player Performance Index)
+An athlete’s performance metric is multiplied each game by a random consistency factor between 0.95 and 1.05.
+Simulate 30 games and use np.cumprod() to visualize how small performance fluctuations accumulate over a season.

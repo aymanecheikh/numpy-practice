@@ -266,6 +266,7 @@ class Sports:
 
 
 class Aerospace:
+    
     '''
     You log hourly fuel consumption (kg) for a 4-engine aircraft over a
     10-hour flight.
@@ -292,6 +293,19 @@ class Aerospace:
         return f'Most stable engine (ID): {
             np.where(fuel_consumption_std.max() == fuel_consumption_std)[0][0]
         }'
+    
+    '''
+    A spacecraft 's fuel efficiency decreases by 0.3% with each kilometer
+    ascended due to gravity and drag.
+    
+    Generate a 10-element array representing efficiency multipliers and
+    compute the cumulative product to estimate efficiency after each
+    kilometer.
+    '''
+    @property
+    def spacecraft_fuel_efficiency_decline(self):
+        return 100 + (1 - np.cumprod(np.full(shape=10, fill_value=1.03)))
+
 
 
 class Logistics:
