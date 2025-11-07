@@ -13,26 +13,9 @@ class Finance:
     
     Compute the 5-day rolling average prices.
     '''
-    @property
-    def simulated_daily_prices(self):
-        daily_price_movements = uniform(
-            low=-0.02,
-            high=0.02,
-            size=20
-        )
-        daily_price_movements[0] = 120
-        
-        for index, price in enumerate(daily_price_movements):
-            if index != 0:
-                daily_price_movements[index] = (
-                    (daily_price_movements[index-1])
-                    * (1 + daily_price_movements[index])
-                )
-        
-        return daily_price_movements.cumprod()
     
     @property
-    def simulated_daily_prices_v2(self):
+    def simulated_daily_prices(self):
         return 120 + np.cumprod(1 + uniform(-1.02, 1.02, 20))
 
     
@@ -74,6 +57,22 @@ class Agriculture:
                 max(total_height_increases) == total_height_increases
             )[0][0]
             }'
+    
+    '''
+    Each week, a crop grows by a factor between 1.01 to 1.10 depending on
+    weather.
+
+    Use np.cumprod() to simulate plant height progression over 16 weeks
+    starting from 10 cm.
+    '''
+    @property
+    def crop_growth_factors(self):
+        return uniform(low=1.01, high=1.1, size=16)
+    
+    @property
+    def crop_height_progression(self):
+        return 10 * np.cumprod(self.crop_growth_factors)
+
 
 
 class Energy:
@@ -112,6 +111,20 @@ class Energy:
         return f'Day ID with largest total energy output: {
             np.where(max(total_daily_output) == total_daily_output)[0][0]
             }'
+    
+    '''
+    A solar panel loses 0.2 to 0.4% efficiency per month due to weathering.
+    
+    Simulate 5 years of performance loss and use np.cumprod() to estimate
+    total efficiency after each month.
+    '''
+    @property
+    def solar_panel_efficiency_loss(self):
+        return uniform(low=-0.002, high=-0.004, size=5)
+    
+    @property
+    def solar_panel_efficiency(self):
+        return np.cumprod(1 + self.solar_panel_efficiency_loss)
 
 
 class Healthcare:
@@ -145,6 +158,20 @@ class Healthcare:
         return f'Patient ID with highest average heart rate: {
             np.where(average_heart_rates.max() == average_heart_rates)[0][0]
         }'
+    
+    '''
+    A patient’s viral load doubles daily for the first 10 days, but random
+    medication effectiveness reduces the growth factor to between 1.5 and 2.0.
+    
+    Simulate the viral load trajectory using np.cumprod().
+    '''
+    @property
+    def viral_load_growth_factor(self):
+        return uniform(low=1.5, high=2, size=10)
+    
+    @property 
+    def viral_growth_trajectory(self):
+        return np.cumprod(self.viral_load_growth_factor)
 
 
 class Transport:
@@ -179,6 +206,21 @@ class Transport:
             axis=1,
             arr=self.ev_charger_usage_data
         ).sum())
+    
+    '''
+    Each station adds a random multiplier between 1.00 and 1.05 to the current
+    delay time due to compounding congestion.
+    
+    Use np.cumprod() to simulate total delay accumulation over 20 stations
+    starting from a 2-minute base delay.
+    '''
+    @property
+    def compounding_congestion_multiplier(self):
+        return uniform(low=1, high=1.05, size=20)
+    
+    @property
+    def total_delay_accumulations(self):
+        return 2 * np.cumprod(self.compounding_congestion_multiplier)
     
 
 class Retail:
@@ -227,6 +269,17 @@ class Retail:
                 == total_unit_sales_by_region
             )[0][0]
         }'
+    
+    '''
+    A store retains 95 to 99% of its customers each month.
+    
+    Generate 24 months of random retention rates and use cumulative product to
+    estimate the fraction of original customers remaining each month.
+    '''
+    @property
+    def retention_rates(self):
+        data = np.cumprod(uniform(low=0.95, high=0.99, size=24))
+        return data
 
 
 class Sports:
@@ -304,7 +357,7 @@ class Aerospace:
     '''
     @property
     def spacecraft_fuel_efficiency_decline(self):
-        return 100 + (1 - np.cumprod(np.full(shape=10, fill_value=1.03)))
+        return np.cumprod(1 + np.full(shape=10, fill_value=-0.003))
 
 
 
@@ -344,7 +397,7 @@ class Logistics:
         return item_tracker
 
 
-class WeatherScience:
+class ClimateScience:
     '''
     A climate scientist collects temperature data over a 5 by 5 region for 7
     days.
@@ -373,6 +426,51 @@ class WeatherScience:
                 arr=self.temperatures
             )
         ).mean()
+    
+    '''
+    A model predicts that each month’s temperature deviation is 0.1 to 0.3
+    times the previous month’s anomaly due to climate inertia.
+    
+    Use np.cumprod() to simulate 24 months of compounding anomaly effects
+    starting from a baseline deviation of +1 °C.
+    '''
+    @property
+    def temperature_deviation(self):
+        return uniform(low=0.1, high=0.3, size=24)
+
+
+class Pharmaceuticals:
+    '''
+    Simulate hourly absorption rates (as percentages) for a new oral drug over
+    12 hours.
+    
+    Use np.cumprod() to estimate total absorption progression over time.
+    '''
+    @property
+    def hourly_absorbtion_rates(self):
+        return uniform(0.95, 0.99, 12)
+    
+    @property
+    def total_absorbtion_progression(self):
+        return np.cumprod(self.hourly_absorbtion_rates)
+
+
+class Manufacturing:
+    '''
+    Each production stage has a yield rate between 93 to 99%.
+    
+    Generate 15 stages and use np.cumprod() to estimate total yield across the
+    full process.
+    '''
+    @property
+    def production_stage_yield_rates(self):
+        return uniform(low=0.93, high=0.99, size=15)
+    
+    @property
+    def total_production_yield(self):
+        return np.cumprod(self.production_stage_yield_rates)
+
+    
 
 
 if __name__ == '__main__':
@@ -385,4 +483,6 @@ if __name__ == '__main__':
     s = Sports()
     ae = Aerospace()
     l = Logistics()
-    ws = WeatherScience()
+    cs = ClimateScience()
+    p = Pharmaceuticals()
+    m = Manufacturing()
