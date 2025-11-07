@@ -26,6 +26,21 @@ class Finance:
             np.ones(5)/5,
             mode='valid'
         )
+    
+    '''
+    Simulate daily returns (%) of a mutual fund for 30 days between −1% and
+    +1.5%.
+    
+    Use np.cumsum() to calculate the cumulative return curve starting from an
+    initial value of 100.
+    '''
+    @property
+    def mutual_fund_daily_returns(self):
+        return uniform(-0.01, 0.015, 30)
+    
+    @property
+    def cumulative_return_curve(self):
+        return 100 + np.cumsum(self.mutual_fund_daily_returns)
 
 
 class Agriculture:
@@ -125,6 +140,20 @@ class Energy:
     @property
     def solar_panel_efficiency(self):
         return np.cumprod(1 + self.solar_panel_efficiency_loss)
+    
+    '''
+    A factory consumes between 120 kWh and 250 kWh hourly for 48 hours.
+    
+    Use np.cumsum() to calculate the cumulative power usage over the two-day
+    period.
+    '''
+    @property
+    def energy_consumption(self):
+        return uniform(120, 250, 48)
+    
+    @property
+    def cumulative_power_usage(self):
+        return np.cumsum(self.energy_consumption)
 
 
 class Healthcare:
@@ -221,6 +250,20 @@ class Transport:
     @property
     def total_delay_accumulations(self):
         return 2 * np.cumprod(self.compounding_congestion_multiplier)
+    
+    '''
+    A delivery van travels random distances between 8 km and 15 km per trip
+    across 25 trips.
+    
+    Use np.cumsum() to find the total distance covered after each trip.
+    '''
+    @property
+    def distances_per_trip(self):
+        return uniform(8, 15, 25)
+    
+    @property
+    def total_distance(self):
+        return np.cumsum(self.distances_per_trip)
     
 
 class Retail:

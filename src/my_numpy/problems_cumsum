@@ -1,0 +1,23 @@
+Finance (Cumulative Returns)
+Simulate daily returns (%) of a mutual fund for 30 days between −1% and +1.5%.
+Use np.cumsum() to calculate the cumulative return curve starting from an initial value of 100.
+
+
+Transportation (Distance Tracking)
+A delivery van travels random distances between 8 km and 15 km per trip across 25 trips.
+Use np.cumsum() to find the total distance covered after each trip.
+
+
+Energy (Cumulative Power Usage)
+A factory consumes between 120 kWh and 250 kWh hourly for 48 hours.
+Use np.cumsum() to calculate the cumulative power usage over the two-day period.
+
+
+Healthcare (Patient Calorie Intake)
+Track 10 meals consumed in a hospital ward, each providing 300–700 kcal.
+Use np.cumsum() to show the cumulative calorie intake progression for one patient across the meals.
+
+
+Retail (Daily Revenue Growth)
+A store records random daily revenues between £800 and £2,400 for 20 days.
+Use np.cumsum() to visualize cumulative revenue, and identify the day total sales first exceed £25,000.
