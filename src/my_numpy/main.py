@@ -120,7 +120,7 @@ class Energy:
     '''
     @property
     def solar_panel_efficiency_loss(self):
-        return uniform(low=-0.002, high=-0.004, size=5)
+        return uniform(low=-0.002, high=-0.004, size=60)
     
     @property
     def solar_panel_efficiency(self):
@@ -423,12 +423,7 @@ class ClimateScience:
     '''
     @property
     def temperatures(self):
-        temperature_data = uniform(
-            low=10,
-            high=35,
-            size=(7, 5, 5)
-        )
-        return temperature_data
+        return uniform(low=10,high=35,size=(7, 5, 5))
     
     @property
     def warmest_cell_avg_temp(self):
@@ -451,12 +446,7 @@ class ClimateScience:
     '''
     @property
     def temperature_deviation(self):
-        positive_deviations = uniform(low=0.1, high=0.3, size=24)
-        return np.apply_along_axis(
-            func1d=lambda x: x * np.random.choice([1, -1]),
-            axis=0,
-            arr=positive_deviations
-        )
+        return uniform(low=0.1, high=0.3, size=24)
     
     @property
     def compounding_anomaly_effects(self):
